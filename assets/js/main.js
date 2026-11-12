@@ -159,6 +159,11 @@
       });
     }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
 
+    /* 保险丝：2.5 秒后还没出现的元素直接显示（防止某些环境 IO 不触发） */
+    setTimeout(function () {
+      document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("is-in"); });
+    }, 2500);
+
     revealEls.forEach(function (el, i) {
       /* 同一屏的卡片错开一点，看起来更轻 */
       el.style.transitionDelay = Math.min(i % 3, 2) * 60 + "ms";
