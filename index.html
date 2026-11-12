@@ -67,8 +67,8 @@
       <div class="hero-copy reveal">
         <p class="eyebrow"><span class="dot"></span>Windows 桌面挂件 · WinUI 3 原生</p>
         <h1>
-          让 Windows 顶部，<br />
-          长出<span class="grad">灵动岛</span>
+          让 Windows 顶部<br />
+          <span class="grad">长出灵动岛</span>
         </h1>
         <p class="lede">
           一枚常驻屏幕顶部中央的胶囊：时间、CPU / 内存 / 网络、正计时与倒计时、闹钟、
@@ -97,15 +97,15 @@
       <!-- 实时演示：CSS/JS 画的岛 -->
       <div class="hero-demo reveal" aria-label="Capsyn 交互演示（悬停展开）">
         <div class="demo-stage" id="demoStage">
-          <div class="island" id="island">
-            <div class="island-pill">
+          <div class="island is-open" id="island">
+            <button class="island-pill" id="islandPill" type="button" aria-label="展开或收起看板演示">
               <span class="pill-clock" data-clock>00:00:00</span>
               <span class="pill-monitor" data-monitor hidden>
                 <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="7"/><path d="M12 10v3l2 2M9 3h6"/></svg>
                 <b data-timer>04:32</b>
               </span>
               <span class="pill-dot" data-dot hidden aria-hidden="true"></span>
-            </div>
+            </button>
             <div class="island-panel">
               <div class="panel-row">
                 <div class="metric">

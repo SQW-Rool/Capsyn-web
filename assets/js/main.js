@@ -47,6 +47,15 @@
 
   function pad(n) { return n < 10 ? "0" + n : String(n); }
 
+  /* 点胶囊：展开 / 收起看板演示 */
+  var islandEl = document.getElementById("island");
+  var islandPill = document.getElementById("islandPill");
+  if (islandEl && islandPill) {
+    islandPill.addEventListener("click", function () {
+      islandEl.classList.toggle("is-open");
+    });
+  }
+
   /* 胶囊里的时钟：每秒刷新 */
   function tickClock() {
     if (!clockEl) return;
