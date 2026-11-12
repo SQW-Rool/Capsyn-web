@@ -521,6 +521,8 @@ h3 { font-size: 19px; letter-spacing: -0.015em; }
    只有在 JS 可用时才隐藏（html.js）：JS 被禁 / 爬虫抓取时内容必须直接可见。 */
 .js .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
 .js .reveal.is-in { opacity: 1; transform: none; }
+/* ?static=1：给截图 / 预览用，直接显示所有内容、不做入场动画 */
+.static .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 
 /* ================= 响应式 ================= */
 @media (max-width: 1080px) {
