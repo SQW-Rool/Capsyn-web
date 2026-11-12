@@ -37,6 +37,9 @@ powershell -c "$l=[System.Net.HttpListener]::new();$l.Prefixes.Add('http://local
 
 然后打开 <http://localhost:8080>。
 
+> 想看「不做入场动画」的静态版本（截图 / 分享预览用）：在地址后面加 `?static=1`，
+> 例如 <https://sqw-rool.github.io/Capsyn-web/?static=1>。
+
 ## 怎么更新线上内容
 
 ```powershell
