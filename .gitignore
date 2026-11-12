@@ -1,0 +1,4 @@
+# 本地预览截图 / 临时文件
+.preview-*.png
+node_modules/
+.DS_Store
