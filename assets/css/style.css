@@ -33,6 +33,9 @@
 
 * { box-sizing: border-box; }
 
+/* sticky 导航 64px：锚点跳转时给标题留出空间，别被盖住 */
+section[id], main, footer { scroll-margin-top: 88px; }
+
 html { scroll-behavior: smooth; }
 
 body {
@@ -335,7 +338,11 @@ img { max-width: 100%; display: block; }
   cursor: pointer;
   box-shadow: var(--shadow-lg);
   user-select: none;
+  transition: min-height 0.5s var(--ease);
 }
+
+.demo:not(.is-open) { min-height: 164px; }
+.demo:not(.is-open) .demo__stage { height: 96px; }
 
 .demo::after {
   content: "";
@@ -352,6 +359,7 @@ img { max-width: 100%; display: block; }
 .demo__stage {
   position: relative;
   height: 400px;
+  transition: height 0.5s var(--ease);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -508,7 +516,7 @@ img { max-width: 100%; display: block; }
   content: "";
   position: absolute;
   inset: -20%;
-  background: url("../img/cover.png?v=20261113b") center / cover;
+  background: url("../img/cover.png?v=20261113c") center / cover;
   opacity: 0.32;
   filter: blur(18px) saturate(120%);
 }
@@ -527,7 +535,7 @@ img { max-width: 100%; display: block; }
   width: 100%;
   aspect-ratio: 1;
   border-radius: 14px;
-  background: url("../img/cover.png?v=20261113b") center / cover;
+  background: url("../img/cover.png?v=20261113c") center / cover;
   margin-top: 10px;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -1106,7 +1114,7 @@ html.is-static .demo__group { opacity: 1; transform: none; filter: none; }
 
 @media (max-width: 1080px) {
   .hero__inner { grid-template-columns: minmax(0, 1fr); gap: 40px; }
-  .hero__demo { max-width: 620px; }
+  .hero__demo { max-width: 620px; margin-inline: auto; width: 100%; }
   .demo { min-height: 360px; }
 
   .features { grid-template-columns: repeat(2, minmax(0, 1fr)); }
