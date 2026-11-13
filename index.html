@@ -11,8 +11,26 @@
   <meta property="og:description" content="时间工具、系统资源、音乐控制、拖拽解压、铃声与到点提醒，全部收进顶部一枚胶囊。原生 WinUI 3，绿色免安装。">
   <meta property="og:image" content="assets/img/island-expanded.png">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="assets/favicon.svg?v=20261113b" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261113b">
+  <style>
+    /* 关键兜底：外部样式表未加载 / 被旧缓存命中时，页面也不至于崩掉 */
+    html { color-scheme: dark; }
+    body { margin: 0; background: #040406; color: #f4f5f7; font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.7; }
+    img { max-width: 100%; height: auto; }
+    svg { max-width: 100%; }
+    svg[aria-hidden="true"] { width: 18px; height: 18px; flex: none; }
+    .wrap { width: min(1180px, calc(100% - 48px)); margin-inline: auto; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; }
+    .brand svg { width: 26px; height: 26px; flex: none; }
+    .nav { display: flex; align-items: center; min-height: 64px; }
+    .nav .wrap { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; }
+    .skip { position: absolute; left: -9999px; }
+    .hero { padding-top: 120px; }
+    .section { padding: 80px 0; }
+    .facts__inner, .features, .shots, .download-grid, .steps, .tech { display: grid; gap: 16px; }
+  </style>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -34,7 +52,7 @@
 <header class="nav" id="nav">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Capsyn 首页">
-      <svg viewBox="0 0 36 36" aria-hidden="true">
+      <svg viewBox="0 0 36 36" width="26" height="26" aria-hidden="true">
         <defs>
           <linearGradient id="brandGrad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
             <stop stop-color="#4c9dff"></stop>
@@ -240,14 +258,14 @@
     <div class="wrap spotlight">
       <div class="spotlight__media reveal">
         <div class="spotlight__frame">
-          <img src="assets/img/island-expanded.png" alt="展开态：看板在左、音乐副岛在右，两岛等高" width="904" height="350" loading="lazy">
+          <img src="assets/img/island-expanded.png?v=20261113b" alt="展开态：看板在左、音乐副岛在右，两岛等高" width="904" height="350" loading="lazy">
         </div>
         <div class="spotlight__row">
           <div class="spotlight__frame pill-shot">
-            <img src="assets/img/pill-music.png" alt="收起态：胶囊显示♪歌名与播放状态" width="192" height="48" loading="lazy">
+            <img src="assets/img/pill-music.png?v=20261113b" alt="收起态：胶囊显示♪歌名与播放状态" width="192" height="48" loading="lazy">
           </div>
           <div class="spotlight__frame pill-shot">
-            <img src="assets/img/pill-timer.png" alt="收起态：计时中胶囊显示计时，不会被音乐顶掉" width="192" height="48" loading="lazy">
+            <img src="assets/img/pill-timer.png?v=20261113b" alt="收起态：计时中胶囊显示计时，不会被音乐顶掉" width="192" height="48" loading="lazy">
           </div>
         </div>
       </div>
@@ -292,42 +310,42 @@
 
       <div class="shots" id="shots">
         <figure class="shot shot--wide reveal" data-cat="monitor">
-          <img src="assets/img/island-expanded.png" alt="展开态：看板在左、音乐副岛在右" width="904" height="350" loading="lazy">
+          <img src="assets/img/island-expanded.png?v=20261113b" alt="展开态：看板在左、音乐副岛在右" width="904" height="350" loading="lazy">
           <figcaption><b>展开态</b><span>看板 550 × 音乐岛 340，等高</span></figcaption>
         </figure>
 
         <figure class="shot reveal" data-cat="monitor">
-          <img src="assets/img/metrics.png" alt="资源监测：环形仪表与网络速率" width="550" height="350" loading="lazy">
+          <img src="assets/img/metrics.png?v=20261113b" alt="资源监测：环形仪表与网络速率" width="550" height="350" loading="lazy">
           <figcaption><b>资源监测</b><span>环形仪表 + 网络行</span></figcaption>
         </figure>
 
         <figure class="shot reveal" data-cat="time">
-          <img src="assets/img/tools.png" alt="时间工具：正计时 / 倒计时 / 闹钟" width="550" height="430" loading="lazy">
+          <img src="assets/img/tools.png?v=20261113b" alt="时间工具：正计时 / 倒计时 / 闹钟" width="550" height="430" loading="lazy">
           <figcaption><b>时间工具</b><span>三种模式 + 记一圈</span></figcaption>
         </figure>
 
         <figure class="shot reveal" data-cat="time">
-          <img src="assets/img/alert.png" alt="到点提醒：岛自动展开并响铃" width="550" height="180" loading="lazy">
+          <img src="assets/img/alert.png?v=20261113b" alt="到点提醒：岛自动展开并响铃" width="550" height="180" loading="lazy">
           <figcaption><b>到点提醒</b><span>展开 + 响铃 + 稍后</span></figcaption>
         </figure>
 
         <figure class="shot reveal" data-cat="drop">
-          <img src="assets/img/drop-zone.png" alt="拖拽解压：虚线落点区" width="550" height="230" loading="lazy">
+          <img src="assets/img/drop-zone.png?v=20261113b" alt="拖拽解压：虚线落点区" width="550" height="230" loading="lazy">
           <figcaption><b>拖拽解压</b><span>拖包到岛上即出现落点区</span></figcaption>
         </figure>
 
         <figure class="shot reveal" data-cat="drop">
-          <img src="assets/img/drop-result.png" alt="拖拽解压：结果与打开文件夹" width="550" height="230" loading="lazy">
+          <img src="assets/img/drop-result.png?v=20261113b" alt="拖拽解压：结果与打开文件夹" width="550" height="230" loading="lazy">
           <figcaption><b>解压结果</b><span>进度 / 路径 / 文件数</span></figcaption>
         </figure>
 
         <figure class="shot reveal" data-cat="monitor">
-          <img src="assets/img/music-island.png" alt="音乐副岛" width="340" height="350" loading="lazy">
+          <img src="assets/img/music-island.png?v=20261113b" alt="音乐副岛" width="340" height="350" loading="lazy">
           <figcaption><b>音乐副岛</b><span>封面 / 歌名 / 控制</span></figcaption>
         </figure>
 
         <figure class="shot reveal" data-cat="time">
-          <img src="assets/img/settings.png" alt="设置：铃声板块，闹钟与倒计时分开选" width="550" height="360" loading="lazy">
+          <img src="assets/img/settings.png?v=20261113b" alt="设置：铃声板块，闹钟与倒计时分开选" width="550" height="360" loading="lazy">
           <figcaption><b>设置</b><span>铃声各 5 套内置 + 自定义音频</span></figcaption>
         </figure>
       </div>
@@ -598,7 +616,7 @@
   <div class="wrap footer__inner">
     <div>
       <a class="brand" href="#top" aria-label="回到顶部">
-        <svg viewBox="0 0 36 36" aria-hidden="true">
+        <svg viewBox="0 0 36 36" width="26" height="26" aria-hidden="true">
           <rect x="3" y="3" width="30" height="30" rx="9" fill="#4c9dff" opacity="0.16"></rect>
           <rect x="8" y="11" width="20" height="8" rx="4" fill="#f4f5f7" opacity="0.9"></rect>
           <rect x="8" y="23" width="9" height="3.4" rx="1.7" fill="#4c9dff"></rect>
@@ -607,7 +625,7 @@
         <span>Capsyn</span>
       </a>
       <p style="margin:10px 0 0;max-width:440px;">
-        用 WinUI 3 打造的 Windows 桌面灵动岛。绿色免安装，源码在 <a href="https://github.com/SQW-Rool/Capsyn" target="_blank" rel="noopener">GitHub</a>。
+        用 WinUI 3 打造的 Windows 桌面灵动岛。绿色免安装，源码在 <a href="https://github.com/SQW-Rool/Capsyn" target="_blank" rel="noopener">GitHub</a>。<br><span style="color:#6f747e;font-size:12.5px;">站点 v2.1 · 2026-11-13</span>
       </p>
     </div>
 
@@ -621,6 +639,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js" defer></script>
+<script src="assets/js/main.js?v=20261113b" defer></script>
 </body>
 </html>

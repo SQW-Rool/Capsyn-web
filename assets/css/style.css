@@ -508,7 +508,7 @@ img { max-width: 100%; display: block; }
   content: "";
   position: absolute;
   inset: -20%;
-  background: url("../img/cover.png") center / cover;
+  background: url("../img/cover.png?v=20261113b") center / cover;
   opacity: 0.32;
   filter: blur(18px) saturate(120%);
 }
@@ -527,7 +527,7 @@ img { max-width: 100%; display: block; }
   width: 100%;
   aspect-ratio: 1;
   border-radius: 14px;
-  background: url("../img/cover.png") center / cover;
+  background: url("../img/cover.png?v=20261113b") center / cover;
   margin-top: 10px;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
