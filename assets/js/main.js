@@ -1,154 +1,61 @@
-/* ============================================================
-   Capsyn 介绍站 —— 交互脚本
-   1) 导航：滚动加背景、移动端折叠
-   2) 实时演示：时钟走时 + 单/双计时状态轮播 + 指标数字轻微跳动
-   3) 截图筛选
-   4) 滚动出现动画
-   全部原生 API，无依赖。
-   ============================================================ */
+/* Capsyn 官网 v2 交互脚本：导航 / 演示岛 / 截图画廊筛选 / 滚动出现 / FAQ 单开 */
 (function () {
   "use strict";
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var staticMode = new URLSearchParams(window.location.search).has("static");
+  if (staticMode) { document.documentElement.classList.add("is-static"); }
 
-  /* ---------------- 1. 导航 ---------------- */
-  var nav = document.getElementById("nav");
+  /* ---------- 移动端导航 ---------- */
   var navToggle = document.getElementById("navToggle");
   var navLinks = document.getElementById("navLinks");
 
-  function onScroll() {
-    if (window.scrollY > 12) nav.classList.add("is-scrolled");
-    else nav.classList.remove("is-scrolled");
-  }
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
-
   if (navToggle && navLinks) {
     navToggle.addEventListener("click", function () {
-      var open = navToggle.getAttribute("aria-expanded") === "true";
-      navToggle.setAttribute("aria-expanded", String(!open));
-      navLinks.classList.toggle("is-open", !open);
+      var open = navLinks.classList.toggle("is-open");
+      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
     });
-    navLinks.addEventListener("click", function (e) {
-      if (e.target.tagName === "A") {
+
+    navLinks.addEventListener("click", function (event) {
+      if (event.target.closest("a")) {
         navLinks.classList.remove("is-open");
         navToggle.setAttribute("aria-expanded", "false");
       }
     });
   }
 
-  /* ---------------- 2. 演示岛 ---------------- */
-  var clockEl = document.querySelector("[data-clock]");
-  var monitorEl = document.querySelector("[data-monitor]");
-  var timerEl = document.querySelector("[data-timer]");
-  var dotEl = document.querySelector("[data-dot]");
-  var cpuEl = document.querySelector("[data-cpu]");
-  var barEl = document.querySelector("[data-bar]");
+  /* ---------- 滚动高亮当前章节 ---------- */
+  var sectionIds = ["features", "music", "gallery", "versions", "faq", "roadmap"];
+  var navAnchors = {};
+  sectionIds.forEach(function (id) {
+    var anchor = document.querySelector('.nav-links a[href="#' + id + '"]');
+    if (anchor) { navAnchors[id] = anchor; }
+  });
 
-  function pad(n) { return n < 10 ? "0" + n : String(n); }
-
-  /* 点胶囊：展开 / 收起看板演示 */
-  var islandEl = document.getElementById("island");
-  var islandPill = document.getElementById("islandPill");
-  if (islandEl && islandPill) {
-    islandPill.addEventListener("click", function () {
-      islandEl.classList.toggle("is-open");
+  var setActive = function (id) {
+    Object.keys(navAnchors).forEach(function (key) {
+      navAnchors[key].classList.toggle("is-active", key === id);
     });
-  }
+  };
 
-  /* 胶囊里的时钟：每秒刷新 */
-  function tickClock() {
-    if (!clockEl) return;
-    var d = new Date();
-    clockEl.textContent = pad(d.getHours()) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds());
-  }
-  tickClock();
-  setInterval(tickClock, 1000);
+  var sections = sectionIds
+    .map(function (id) { return document.getElementById(id); })
+    .filter(Boolean);
 
-  /* 演示状态轮播：0 时钟 → 1 单计时 → 2 双计时（胶囊 + 小圆岛） */
-  var demoState = 0;
-  var remaining = 4 * 60 + 32; /* 04:32 */
-
-  function renderDemo() {
-    if (!monitorEl || !dotEl) return;
-
-    var hasMonitor = demoState >= 1;
-    var hasDot = demoState >= 2;
-
-    monitorEl.hidden = !hasMonitor;
-    clockEl.hidden = hasMonitor;
-    dotEl.hidden = !hasDot;
-
-    if (hasMonitor && timerEl) {
-      var m = Math.floor(remaining / 60);
-      var s = remaining % 60;
-      timerEl.textContent = pad(m) + ":" + pad(s);
-    }
-  }
-
-  function advanceDemo() {
-    demoState = (demoState + 1) % 3;
-    renderDemo();
-  }
-
-  if (!reduceMotion) {
-    setInterval(advanceDemo, 4200);
-  }
-
-  /* 倒计时每秒 -1（只在显示时） */
-  if (!reduceMotion) {
-    setInterval(function () {
-      if (remaining > 0) {
-        remaining -= 1;
-      } else {
-        remaining = 4 * 60 + 32;
-      }
-      if (demoState >= 1) renderDemo();
-    }, 1000);
-  }
-
-  /* 指标数字轻微跳动，让演示看起来"活着" */
-  if (!reduceMotion && cpuEl && barEl) {
-    setInterval(function () {
-      var v = 12 + Math.round(Math.random() * 26);
-      cpuEl.textContent = v + "%";
-      barEl.style.width = v + "%";
-    }, 1800);
-  }
-
-  renderDemo();
-
-  /* ---------------- 3. 截图筛选 ---------------- */
-  var tabs = document.getElementById("tabs");
-  var shots = document.getElementById("shots");
-
-  if (tabs && shots) {
-    var items = Array.prototype.slice.call(shots.querySelectorAll(".shot"));
-
-    tabs.addEventListener("click", function (e) {
-      var btn = e.target.closest(".tab");
-      if (!btn) return;
-
-      Array.prototype.forEach.call(tabs.querySelectorAll(".tab"), function (t) {
-        var active = t === btn;
-        t.classList.toggle("is-active", active);
-        t.setAttribute("aria-selected", String(active));
+  if ("IntersectionObserver" in window && sections.length) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { setActive(entry.target.id); }
       });
+    }, { rootMargin: "-40% 0px -50% 0px" });
 
-      var filter = btn.getAttribute("data-filter");
-      items.forEach(function (item) {
-        var show = filter === "all" || item.getAttribute("data-tag") === filter;
-        item.classList.toggle("is-hidden", !show);
-        if (show) item.classList.add("is-in"); /* 重新显示时保持可见 */
-      });
-    });
+    sections.forEach(function (section) { spy.observe(section); });
   }
 
-  /* ---------------- 4. 滚动出现 ---------------- */
-  var revealEls = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
-
-  if (!("IntersectionObserver" in window) || reduceMotion) {
-    revealEls.forEach(function (el) { el.classList.add("is-in"); });
+  /* ---------- 滚动出现 ---------- */
+  var reveals = document.querySelectorAll(".reveal");
+  if (staticMode || reduceMotion || !("IntersectionObserver" in window)) {
+    reveals.forEach(function (el) { el.classList.add("is-in"); });
   } else {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -157,17 +64,98 @@
           io.unobserve(entry.target);
         }
       });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
 
-    /* 保险丝：2.5 秒后还没出现的元素直接显示（防止某些环境 IO 不触发） */
-    setTimeout(function () {
-      document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("is-in"); });
-    }, 2500);
+    reveals.forEach(function (el) { io.observe(el); });
+  }
 
-    revealEls.forEach(function (el, i) {
-      /* 同一屏的卡片错开一点，看起来更轻 */
-      el.style.transitionDelay = Math.min(i % 3, 2) * 60 + "ms";
-      io.observe(el);
+  /* ---------- 首屏演示岛：自动展开 / 收起 + 可点击 ---------- */
+  var demo = document.getElementById("demo");
+  if (demo && !reduceMotion && !staticMode) {
+    var open = true;
+    var timer = null;
+    var hovering = false;
+
+    var render = function () {
+      demo.classList.toggle("is-open", open);
+    };
+
+    var schedule = function () {
+      window.clearTimeout(timer);
+      if (hovering) { return; }
+      timer = window.setTimeout(function () {
+        open = !open;
+        render();
+        schedule();
+      }, open ? 5200 : 3400);
+    };
+
+    demo.addEventListener("pointerenter", function () {
+      hovering = true;
+      window.clearTimeout(timer);
+      open = true;
+      render();
     });
+
+    demo.addEventListener("pointerleave", function () {
+      hovering = false;
+      schedule();
+    });
+
+    demo.addEventListener("click", function () {
+      open = !open;
+      render();
+      schedule();
+    });
+
+    demo.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        open = !open;
+        render();
+      }
+    });
+
+    demo.setAttribute("tabindex", "0");
+    schedule();
+  }
+
+  /* ---------- 截图画廊筛选 ---------- */
+  var tabs = document.getElementById("tabs");
+  var shots = document.getElementById("shots");
+
+  if (tabs && shots) {
+    var items = Array.prototype.slice.call(shots.querySelectorAll(".shot"));
+
+    var apply = function (filter) {
+      items.forEach(function (item) {
+        var show = filter === "all" || item.getAttribute("data-cat") === filter;
+        item.classList.toggle("is-hidden", !show);
+      });
+    };
+
+    tabs.addEventListener("click", function (event) {
+      var button = event.target.closest("button[data-filter]");
+      if (!button) { return; }
+
+      tabs.querySelectorAll("button").forEach(function (b) {
+        b.setAttribute("aria-selected", b === button ? "true" : "false");
+      });
+
+      apply(button.getAttribute("data-filter"));
+    });
+  }
+
+  /* ---------- FAQ：同时只展开一条 ---------- */
+  var faq = document.querySelector(".faq");
+  if (faq) {
+    faq.addEventListener("toggle", function (event) {
+      var opened = event.target;
+      if (!(opened instanceof HTMLDetailsElement) || !opened.open) { return; }
+
+      faq.querySelectorAll("details.q").forEach(function (other) {
+        if (other !== opened) { other.open = false; }
+      });
+    }, true);
   }
 })();
