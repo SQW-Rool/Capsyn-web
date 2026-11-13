@@ -219,7 +219,10 @@ h3 { font-size: 19px; letter-spacing: -0.015em; }
 .hero h1 { margin-bottom: 22px; }
 .lede { margin: 0 0 32px; max-width: 30em; color: var(--text-2); font-size: 17px; }
 
-.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 46px; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
+.hero-note { margin: 0 0 46px; font-size: 13px; color: var(--text-3); }
+.hero-note a { color: var(--text-2); border-bottom: 1px solid rgba(255, 255, 255, 0.18); }
+.hero-note a:hover { color: var(--text); }
 
 .facts {
   display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -486,6 +489,13 @@ h3 { font-size: 19px; letter-spacing: -0.015em; }
 }
 .dl-card .btn { margin-top: auto; }
 .dl-meta { margin: 14px 0 0; font-size: 12.5px; color: var(--text-3); text-align: center; }
+.dl-direct {
+  display: block; margin-top: 10px; text-align: center;
+  font-size: 12.5px; color: var(--text-3);
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.16);
+  padding-bottom: 2px; align-self: center;
+}
+.dl-direct:hover { color: var(--text); border-color: rgba(255, 255, 255, 0.35); }
 
 .dl-note { margin: 26px 0 0; color: var(--text-3); font-size: 13.5px; }
 .dl-note a { color: var(--text-2); border-bottom: 1px solid rgba(255, 255, 255, 0.18); }
