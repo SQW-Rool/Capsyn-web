@@ -516,7 +516,7 @@ img { max-width: 100%; display: block; }
   content: "";
   position: absolute;
   inset: -20%;
-  background: url("../img/cover.png?v=20261113d") center / cover;
+  background: url("../img/cover.png?v=20261113e") center / cover;
   opacity: 0.32;
   filter: blur(18px) saturate(120%);
 }
@@ -535,7 +535,7 @@ img { max-width: 100%; display: block; }
   width: 100%;
   aspect-ratio: 1;
   border-radius: 14px;
-  background: url("../img/cover.png?v=20261113d") center / cover;
+  background: url("../img/cover.png?v=20261113e") center / cover;
   margin-top: 10px;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -744,19 +744,19 @@ img { max-width: 100%; display: block; }
 .checklist { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 12px; }
 
 .checklist li {
-  display: grid;
-  grid-template-columns: 18px minmax(0, 1fr);
-  gap: 10px;
-  align-items: start;
+  position: relative;
+  padding-left: 28px;
   font-size: 14.5px;
   color: var(--text-2);
 }
 
 .checklist li::before {
   content: "";
+  position: absolute;
+  left: 0;
+  top: 3px;
   width: 18px;
   height: 18px;
-  margin-top: 3px;
   border-radius: 50%;
   background: rgba(76, 157, 255, 0.14);
   border: 1px solid rgba(76, 157, 255, 0.32);
